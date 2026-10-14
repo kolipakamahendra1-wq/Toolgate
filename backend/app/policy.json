@@ -1,0 +1,31 @@
+{
+  "roles": {
+    "analyst": {
+      "description": "Sales and ops analyst. No HR pay data, no customer identities.",
+      "tables": {
+        "employees": {"columns": ["id", "name", "department", "title", "region"]},
+        "deals": {"columns": ["id", "account", "region", "amount", "stage", "owner"], "row_filter": "region IN ('EMEA', 'APAC')"},
+        "tickets": {"columns": ["id", "subject", "status", "priority"]}
+      }
+    },
+    "hr_admin": {
+      "description": "HR administrator. Sees pay data, masked personal email.",
+      "tables": {
+        "employees": {
+          "columns": ["id", "name", "department", "title", "salary", "email", "region"],
+          "masks": {"email": "partial"}
+        }
+      }
+    },
+    "support": {
+      "description": "Support agent. Sees tickets with customer redacted to initials.",
+      "tables": {
+        "employees": {"columns": ["id", "name", "department"]},
+        "tickets": {
+          "columns": ["id", "customer", "subject", "status", "priority", "assignee", "body"],
+          "masks": {"customer": "partial"}
+        }
+      }
+    }
+  }
+}
